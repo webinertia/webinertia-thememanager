@@ -1,0 +1,71 @@
+{
+    "name": "webinertia/webinertia-thememanager",
+    "description": "Provides multiple theme support to laminas mvc",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "laminas",
+        "laminas-mvc",
+        "laminas view"
+    ],
+    "homepage": "https://github.com/webinertia/thememanager",
+    "authors": [
+        {
+            "name": "Joey Smith",
+            "email": "jsmith@webinertia.net",
+            "homepage": "https://webinertia.net/"
+        }
+    ],
+    "suggest": {
+        "laminas/laminas-component-installer" : "^3.0, required for configuration injection"
+    },
+    "require": {
+        "php": "~8.1.0 || ~8.2.0",
+        "laminas/laminas-mvc": "^3.6.0"
+    },
+    "require-dev": {
+        "ext-intl": "*",
+        "laminas/laminas-mvc": "^3.6.0",
+        "phpunit/phpunit": "10.0.0",
+        "psalm/plugin-phpunit": "^0.18.4",
+        "phpstan/phpstan": "1.9.2",
+        "laminas/laminas-test": "^4.8",
+        "phpstan/extension-installer": "^1.2",
+        "slam/phpstan-laminas-framework": "^1.4"
+    },
+    "extra": {
+        "laminas": {
+            "module": "Webinertia\\ThemeManager"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Webinertia\\ThemeManager\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WebinertiaTest\\ThemeManagerTest\\": "test/"
+        }
+    },
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@static-analysis",
+            "@test"
+        ],
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "static-analysis": "psalm --shepherd --stats",
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+        "phpstan": "php vendor/bin/phpstan analyse --xdebug"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        }
+    }
+}
