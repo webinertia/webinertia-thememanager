@@ -3,21 +3,23 @@
 I am currently working on cli commands to faciliate migrating existing view files into the correct directory structure. Until then
 this module expects the following directory structure:
 
+```
 src/
     view/
         default/ <- theme directory - this is really the only change
             application/ <- as you can see this is back to the default structure module directory
                 index/ <- controller directory
-                    index.phtml <- action view files
+                    index.phtml <- action view files```
 
 With this module installed and the above changes made Laminas will then support multiple themes allowing you to prototype faster
 since you can then have
+```
 src/
     view/
         default/
         dark/
         light/
-        blue/
+        blue/```
 etc
 
 Now, a few things to mention here. Yes, every theme can and will load its own layout file if present, if a layout file is not present then
