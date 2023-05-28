@@ -28,8 +28,8 @@ class MigrateCommand extends AbstractParamAwareCommand
 
     public function configure(): void
     {
-        $this->setName('move-files');
-        $this->setDescription('Move Files');
+        $this->setName('migrate-files');
+        $this->setDescription('Migrate Files');
         $this->setHelp('This command restructures the applications view layer to what is required by ThemeManager');
     }
 
