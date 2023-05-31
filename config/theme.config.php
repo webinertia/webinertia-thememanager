@@ -2,13 +2,13 @@
 return [
     'default' => [
         'id' => '1',
-        'active' => '1',
+        'active' => true,
         'name' => 'default',
         'fallback' => 'default',
     ],
     'dark' => [
         'id' => '2',
-        'active' => '0',
+        'active' => false,
         'name' => 'dark',
         'fallback' => 'default',
     ],
