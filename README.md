@@ -36,6 +36,11 @@ since you can then have
 
 etc
 
+#### Important Note
+
+As you may be wondering about what changes are made in regards to asset loading in /public for style sheets, images and script files.
+I make zero assumptions as to what directory structure the developer would like to use for that. Its impossible to know really. There are so many different front-end asset package managers that its not really feasable to try and support all of them. I leave it to you to modify those directories as best fits your project and your theme. Just include a layout and you can have whatever is required. The default theme is not modified from the default Laminas MVC structure and the paths are not adjusted.
+
 Now, a few things to mention here. Yes, every theme can and will load its own layout file if present, if a layout file is not present then
 it will load the view files from the active theme (see the modules theme.config.php file) and will load the default themes layout.
 
