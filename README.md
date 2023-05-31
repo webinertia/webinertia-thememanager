@@ -1,7 +1,17 @@
 # thememanager
 
-I am currently working on cli commands to faciliate migrating existing view files into the correct directory structure. Until then
-this module expects the following directory structure:
+## Installation
+
+```composer require webinertia/webinertia-thememanager
+```
+
+### Post install setup
+
+After installing the module for the first time your application will not render until you run the build command. This command restructers
+the directories to the proper structure (as detailed below).
+
+```php ./vendor/bin/laminas thememanager:build-theme
+```
 
 ```src/
     view/
@@ -10,8 +20,10 @@ this module expects the following directory structure:
                 index/ <- controller directory
                     index.phtml <- action view files
 ```
+
 With this module installed and the above changes made Laminas will then support multiple themes allowing you to prototype faster
 since you can then have
+
 ```src/
     view/
         default/
@@ -19,6 +31,7 @@ since you can then have
         light/
         blue/
 ```
+
 etc
 
 Now, a few things to mention here. Yes, every theme can and will load its own layout file if present, if a layout file is not present then

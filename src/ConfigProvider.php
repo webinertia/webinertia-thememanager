@@ -10,7 +10,7 @@ class ConfigProvider
     {
         return [
             'commands' => [
-                'thememanager:migrate' => Command\MigrateCommand::class,
+                'thememanager:build-theme' => Command\BuildTheme::class,
             ],
         ];
     }
@@ -22,7 +22,7 @@ class ConfigProvider
                 'ViewTemplatePathStack' => View\Resolver\TemplatePathStack::class,
             ],
             'factories' => [
-                Command\MigrateCommand::class          => Command\Factory\MigrateCommandFactory::class,
+                Command\BuildTheme::class          => Command\BuildThemeFactory::class,
                 Listener\AdminLayoutListener::class    => Listener\AdminLayoutListenerFactory::class,
                 View\Resolver\TemplatePathStack::class => ViewTemplatePathStackFactory::class,
             ],
