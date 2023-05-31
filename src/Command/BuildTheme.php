@@ -7,10 +7,8 @@ namespace Webinertia\ThemeManager\Command;
 use DirectoryIterator;
 use Laminas\Cli\Command\AbstractParamAwareCommand;
 use Laminas\Cli\Input\ParamAwareInputInterface;
-use Laminas\Cli\Input\StringParam;
 use Laminas\Filter\Exception;
 use Laminas\Filter\File\Rename;
-use SplFileInfo;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
