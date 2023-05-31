@@ -34,9 +34,7 @@ since you can then have
         blue/
 ```
 
-etc
-
-#### Important Note
+#### Important note about public assets
 
 As you may be wondering about what changes are made in regards to asset loading in /public for style sheets, images and script files.
 I make zero assumptions as to what directory structure the developer would like to use for that. Its impossible to know really. There are so many different front-end asset package managers that its not really feasable to try and support all of them. I leave it to you to modify those directories as best fits your project and your theme. Just include a layout and you can have whatever is required. The default theme is not modified from the default Laminas MVC structure and the paths are not adjusted.
