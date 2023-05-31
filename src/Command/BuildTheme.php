@@ -18,7 +18,7 @@ use const DIRECTORY_SEPARATOR;
 
 use function mkdir;
 
-class BuildTheme extends AbstractParamAwareCommand
+final class BuildTheme extends AbstractParamAwareCommand
 {
     private const APP_DIR           = 'Application';
     private const LAYOUT_PATH       = __DIR__ . '/../../../../../module/Application/view/layout';
