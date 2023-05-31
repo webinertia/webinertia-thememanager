@@ -12,8 +12,6 @@ use Laminas\Filter\File\Rename;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use const DIRECTORY_SEPARATOR;
-
 use function mkdir;
 
 final class BuildTheme extends AbstractParamAwareCommand
@@ -53,8 +51,16 @@ final class BuildTheme extends AbstractParamAwareCommand
                 continue;
             }
             $module = $moduleInfo->getFilename();
-            foreach (new DirectoryIterator($moduleInfo->getRealPath() . self::VIEW_PATH_SEGMENT) as $moduleSourceInfo) {
-                if ($moduleSourceInfo->isDot() || ! $moduleSourceInfo->isDir() && $moduleSourceInfo->getFileName() !== self::THEME_NAME) {
+            foreach (
+                new DirectoryIterator($moduleInfo->getRealPath()
+                . self::VIEW_PATH_SEGMENT) as $moduleSourceInfo
+            ) {
+                if (
+                    $moduleSourceInfo->isDot()
+                    || ! $moduleSourceInfo->isDir()
+                    && $moduleSourceInfo->getFileName()
+                    !== self::THEME_NAME
+                ) {
                     continue;
                 }
                 $moduleSource = $moduleSourceInfo->getFileName();
