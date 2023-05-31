@@ -39,8 +39,7 @@ final class BuildTheme extends AbstractParamAwareCommand
     /** @param ParamAwareInputInterface $input */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $result = $this->migrateTheme();
-        return 0;
+        return $this->migrateTheme();
     }
 
     private function migrateTheme(): int
