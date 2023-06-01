@@ -8,7 +8,7 @@ use Laminas\Config\Factory;
 
 use function dirname;
 
-final class Theme
+class Theme
 {
     public const CONFIG_PATH   = __DIR__ . '/../../config/';
     public const DEFAULT_THEME = 'default';
