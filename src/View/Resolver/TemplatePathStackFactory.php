@@ -6,6 +6,7 @@ namespace Webinertia\ThemeManager\View\Resolver;
 
 use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
 use Psr\Container\ContainerInterface;
+use Webinertia\ThemeManager\Model\Theme;
 
 class TemplatePathStackFactory implements DelegatorFactoryInterface
 {
@@ -13,7 +14,7 @@ class TemplatePathStackFactory implements DelegatorFactoryInterface
     {
         $config = $container->get('config');
 
-        $templatePathStack = new TemplatePathStack();
+        $templatePathStack = new TemplatePathStack($container->get(Theme::class));
 
         if (is_array($config) && isset($config['view_manager'])) {
             $config = $config['view_manager'];

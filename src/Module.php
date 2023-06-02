@@ -10,10 +10,15 @@ final class Module
     {
         $configProvider = new ConfigProvider();
         return [
-            'laminas-cli'     => $configProvider->getCliConfig(),
-            'service_manager' => $configProvider->getDependencyConfig(),
-            'listeners'       => $configProvider->getListenerConfig(),
-            'view_manager'    => $configProvider->getViewManagerConfig(),
+            'laminas-cli'        => $configProvider->getCliConfig(),
+            'service_manager'    => $configProvider->getDependencyConfig(),
+            'listeners'          => $configProvider->getListenerConfig(),
+            'view_manager'       => $configProvider->getViewManagerConfig(),
+            'session_config'     => $configProvider->getSessionConfig(),
+            'session_containers' => $configProvider->getSessionContainerConfig(),
+            'session_storage'    => $configProvider->getSessionStorageConfig(),
+            'session_validators' => $configProvider->getSessionValidatorConfig(),
+            'theme_manager'      => $configProvider->getThemeManagerConfig(),
         ];
     }
 }

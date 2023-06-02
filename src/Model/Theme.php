@@ -10,7 +10,7 @@ use function dirname;
 
 class Theme
 {
-    public const CONFIG_PATH   = __DIR__ . '/../../config/';
+    public const CONFIG_PATH   = __DIR__ . '/../../../../../data/thememanager/';
     public const DEFAULT_THEME = 'default';
     /** @var string $activeTheme */
     protected $activeTheme;

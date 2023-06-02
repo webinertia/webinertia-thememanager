@@ -11,10 +11,15 @@ use function str_contains;
 
 class TemplatePathStack extends Stack
 {
+    public function __construct(
+        protected Theme $theme,
+        $options = null
+    ) {
+        parent::__construct($options);
+    }
     public function addPaths(array $paths)
     {
-        $theme = new Theme();
-        $activeTheme = $theme->getActiveTheme();
+        $activeTheme = $this->theme->getActiveTheme();
         foreach ($paths as $path) {
             if (! str_contains($path, 'laminas-developer-tools')) {
                 $this->addPath($path . '/' . Theme::DEFAULT_THEME);
