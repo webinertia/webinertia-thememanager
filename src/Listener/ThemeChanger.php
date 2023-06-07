@@ -6,8 +6,6 @@ namespace Webinertia\ThemeManager\Listener;
 
 use Laminas\EventManager\AbstractListenerAggregate;
 use Laminas\EventManager\EventManagerInterface;
-use Laminas\Http\PhpEnvironment\Request;
-use Laminas\Http\PhpEnvironment\Response;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Session\Container;
 
@@ -26,7 +24,7 @@ final class ThemeChanger extends AbstractListenerAggregate
 
     public function changeTheme(MvcEvent $event): void
     {
-        /** @var Request $request */
+        /** @var Request \Laminas\Http\PhpEnvironment\Request $request */
         $request = $event->getRequest();
         $params   = $request->getQuery()->toArray();
         if (
@@ -36,6 +34,5 @@ final class ThemeChanger extends AbstractListenerAggregate
             return;
         }
         $this->themeData->theme = $params['selected'];
-
     }
 }

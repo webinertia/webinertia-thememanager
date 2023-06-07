@@ -13,7 +13,7 @@ use Webinertia\ThemeManager\Controller\AdminControllerInterface;
 
 use function sprintf;
 
-class AdminLayoutListener extends AbstractListenerAggregate
+final class AdminLayoutListener extends AbstractListenerAggregate
 {
     /** @var array<mixed> $config */
     protected $config;
@@ -29,7 +29,7 @@ class AdminLayoutListener extends AbstractListenerAggregate
         TemplateMapResolver $templateMapResolver,
         array $config
     ) {
-        $this->config = $config;
+        $this->config              = $config;
         $this->controllerManager   = $controllerManager;
         $this->templateMapResolver = $templateMapResolver;
     }

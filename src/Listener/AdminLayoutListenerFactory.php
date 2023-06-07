@@ -9,7 +9,7 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\View\Resolver\TemplateMapResolver;
 use Psr\Container\ContainerInterface;
 
-class AdminLayoutListenerFactory implements FactoryInterface
+final class AdminLayoutListenerFactory implements FactoryInterface
 {
     /** @inheritDoc */
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null): AdminLayoutListener

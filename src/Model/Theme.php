@@ -26,6 +26,14 @@ class Theme
     protected $resourceId = 'themes';
     /** @var array<string, array> $config */
     protected $config = [];
+    /** @var array<string, array> $defaultConfig */
+    private static $defaultConfig = [
+            'default' => [
+                'id' => 1,
+                'active' => true,
+                'name' => 'default'
+            ]
+    ];
 
     public function __construct()
     {

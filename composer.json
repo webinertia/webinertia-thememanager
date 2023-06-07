@@ -24,7 +24,8 @@
         "laminas/laminas-mvc": "^3.6.0",
         "laminas/laminas-filter": "^2.32",
         "laminas/laminas-cli": "^1.8",
-        "laminas/laminas-session": "^2.16"
+        "laminas/laminas-session": "^2.16",
+        "laminas/laminas-authentication": "^2.13.0"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "^2.4.0",

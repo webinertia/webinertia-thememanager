@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Webinertia\ThemeManager;
 
+use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\Session;
 use Webinertia\ThemeManager\Session\Container;
@@ -57,6 +58,12 @@ class ConfigProvider
     {
         return [
             'admin_template' => 'layout/admin',
+            'template_path_stack' => [
+                __DIR__ . '/../view',
+            ],
+            'strategies'               => [
+                'ViewJsonStrategy',
+            ],
         ];
     }
 
@@ -91,6 +98,52 @@ class ConfigProvider
     {
         return [
             'theme_changer_session_length' => 3600 * 24 * 365 * 5,
+        ];
+    }
+
+    public function getControllerConfig(): array
+    {
+        return [
+            'factories' => [
+                Controller\IndexController::class => Controller\IndexControllerFactory::class,
+            ],
+        ];
+    }
+
+    public function getRouteConfig(): array
+    {
+        return [
+            'routes' => [
+                'tm.login' => [
+                    'type' => Segment::class,
+                    'options' => [
+                        'route'    => '/admin/thememanager[/:action]',
+                        'defaults' => [
+                            'controller' => Controller\IndexController::class,
+                            'action'     => 'login',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public function getFormElementConfig(): array
+    {
+        return [
+            'factories' => [
+                Form\ThemeChanger::class => Form\ThemeChangerFactory::class,
+                Form\Login::class        => InvokableFactory::class,
+            ],
+        ];
+    }
+
+    public function getValidatorConfig(): array
+    {
+        return [
+            'factories' => [
+                Validator\Password::class => InvokableFactory::class,
+            ],
         ];
     }
 }
