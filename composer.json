@@ -1,14 +1,13 @@
 {
     "name": "webinertia/webinertia-thememanager",
     "description": "Provides multiple theme support to laminas mvc",
-    "type": "library",
     "license": "BSD-3-Clause",
     "keywords": [
         "laminas",
         "laminas-mvc",
         "laminas view"
     ],
-    "homepage": "https://github.com/webinertia/thememanager",
+    "homepage": "https://github.com/webinertia/webinertia-thememanager/discussions",
     "authors": [
         {
             "name": "Joey Smith",
