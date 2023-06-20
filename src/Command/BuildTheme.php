@@ -13,6 +13,7 @@ use SplFileInfo;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use function copy;
 use function in_array;
 use function is_dir;
 use function mkdir;
@@ -28,7 +29,12 @@ final class BuildTheme extends AbstractParamAwareCommand
     // asset paths
     private const PUBLIC_PATH         = __DIR__ . '/../../../../../public';
     private const PUBLIC_PATH_SEGMENT = '/theme';
+    private const DATA_PATH         = __DIR__ . '/../../../../../data';
+    private const DATA_TARGET       = '/thememanager';
+    private const BACKUP_CONFIG     = __DIR__ . '/../../config/theme.config.php';
+    private const CONFIG_FILENAME   = 'theme.config.php';
     private static $supportedAssets = ['css', 'img', 'js'];
+
     public function __construct(
         /** @var array<string, mixed> $config */
         private array $config,
@@ -46,7 +52,7 @@ final class BuildTheme extends AbstractParamAwareCommand
     /** @param ParamAwareInputInterface $input */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if ($this->migrateTheme($input, $output) === self::SUCCESS) {
+        if ($this->migrateTheme($input, $output) === self::SUCCESS && self::copyConfig($output) === self::SUCCESS) {
             return $this->migrateAssets($input, $output);
         } else {
             return self::FAILURE;
@@ -132,5 +138,34 @@ final class BuildTheme extends AbstractParamAwareCommand
         }
         $output->writeln('<info>All supported assets moved successfully.</info>');
         return self::SUCCESS;
+    }
+
+    public static function copyConfig(?OutputInterface $output = null): int
+    {
+        if (
+            is_dir(self::DATA_PATH . self::DATA_TARGET)
+            || mkdir(self::DATA_PATH . self::DATA_TARGET, 0750, true)
+        ) {
+
+            $targetInfo = new SplFileInfo(self::DATA_PATH . self::DATA_TARGET);
+            if ($targetInfo->isDir() && $targetInfo->isReadable() && $targetInfo->isWritable()) {
+                $source = new SplFileInfo(self::BACKUP_CONFIG);
+                if ($source->isFile() && $source->isReadable()) {
+                    if (! copy($source->getRealPath(), $targetInfo->getRealPath(). '/' . self::CONFIG_FILENAME)) {
+                        return self::FAILURE;
+                    }
+                    $output->writeln('<info>Config written to: ' . $targetInfo->getRealPath() . '</info>');
+                    return self::SUCCESS;
+                } else {
+                    $output->writeln('<error>Directory permission error: ' . $targetInfo->getRealPath() . '</error>');
+                }
+
+            } else {
+                $output->writeln('<error>Config could not be written to: ' . $targetInfo->getRealPath() . '</error>');
+                return self::FAILURE;
+            }
+        } else {
+            $output->writeln('<error>Applications /data/thememanager could not be found or created.</error>');
+        }
     }
 }

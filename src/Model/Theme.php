@@ -8,6 +8,8 @@ use Laminas\Config\Factory;
 
 use function dirname;
 
+use const PHP_SAPI;
+
 class Theme
 {
     public const CONFIG_PATH   = __DIR__ . '/../../../../../data/thememanager/';
@@ -38,8 +40,13 @@ class Theme
     public function __construct()
     {
         $this->directory  = dirname(__DIR__, 4) . '/theme/';
-        $this->config     = Factory::fromFile(self::CONFIG_PATH . $this->configFilename);
-        $this->processConfig($this->config);
+        if (PHP_SAPI !== 'cli') {
+            $this->config     = Factory::fromFile(self::CONFIG_PATH . $this->configFilename);
+            $this->processConfig($this->config);
+        } else {
+            $this->processConfig(self::$defaultConfig);
+        }
+
     }
 
     protected function processConfig(array $config): void

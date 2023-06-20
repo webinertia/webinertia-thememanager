@@ -61,7 +61,7 @@ class ConfigProvider
             'template_path_stack' => [
                 __DIR__ . '/../view',
             ],
-            'strategies'               => [
+            'strategies'          => [
                 'ViewJsonStrategy',
             ],
         ];
