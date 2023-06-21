@@ -21,9 +21,6 @@
             <property name="ignoreBlankLines" value="false"/>
         </properties>
     </rule>
-    <rule ref="PSR1.Files.SideEffects">
-        <exclude-pattern>public/index.php</exclude-pattern>
-    </rule>
 
     <!-- view files adjustments -->
     <rule ref="Generic.Files.LineLength">
@@ -34,7 +31,8 @@
     </rule>
 
     <!-- Paths to check -->
+        <!-- Paths to check -->
+    <file>src</file>
+    <file>test</file>
     <file>config</file>
-    <file>module</file>
-    <file>public/index.php</file>
 </ruleset>
