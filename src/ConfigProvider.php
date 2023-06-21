@@ -7,6 +7,7 @@ namespace Webinertia\ThemeManager;
 use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\Session;
+use Laminas\View\Helper\BasePath;
 use Webinertia\ThemeManager\Session\Container;
 use Webinertia\ThemeManager\Session\ContainerFactory;
 
@@ -143,6 +144,17 @@ class ConfigProvider
         return [
             'factories' => [
                 Validator\Password::class => InvokableFactory::class,
+            ],
+        ];
+    }
+
+    public function getViewHelperConfig(): array
+    {
+        return [
+            'delegators' => [
+                BasePath::class => [
+                    View\Helper\Service\BasePathDelegatorFactory::class,
+                ],
             ],
         ];
     }

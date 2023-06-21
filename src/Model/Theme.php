@@ -12,6 +12,7 @@ use const PHP_SAPI;
 
 class Theme
 {
+    public const BASE_PATH_SEGMENT = 'theme/';
     public const CONFIG_PATH   = __DIR__ . '/../../../../../data/thememanager/';
     public const DEFAULT_THEME = 'default';
     /** @var string $activeTheme */

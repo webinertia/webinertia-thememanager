@@ -23,6 +23,7 @@ final class Module
             'router'             => $configProvider->getRouteConfig(),
             'form_elements'      => $configProvider->getFormElementConfig(),
             'validators'         => $configProvider->getValidatorConfig(),
+            'view_helpers'       => $configProvider->getViewHelperConfig(),
         ];
     }
 }
