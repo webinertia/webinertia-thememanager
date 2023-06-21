@@ -33,7 +33,9 @@
         "laminas/laminas-test": "^4.8",
         "phpstan/extension-installer": "^1.2",
         "slam/phpstan-laminas-framework": "^1.4",
-        "webinertia/limatus": "^0.0.12"
+        "webinertia/limatus": "^0.0.12",
+        "webinertia/webinertia-session": "^0.0.3",
+        "webinertia/webinertia-validator": "^0.0.3"
     },
     "extra": {
         "laminas": {
