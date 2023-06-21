@@ -12,7 +12,7 @@ use Webinertia\ThemeManager\Session\Container;
 final class ThemeChangerFactory implements FactoryInterface
 {
     /** @inheritDoc */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null): ThemeChanger
     {
         if (! $container->has(Container::class)) {
             throw new ServiceNotFoundException('ThemeData Session container service was not found.');
