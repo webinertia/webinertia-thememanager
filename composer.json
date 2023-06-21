@@ -32,7 +32,8 @@
         "phpstan/phpstan": "1.10.19",
         "laminas/laminas-test": "^4.8",
         "phpstan/extension-installer": "^1.2",
-        "slam/phpstan-laminas-framework": "^1.4"
+        "slam/phpstan-laminas-framework": "^1.4",
+        "webinertia/limatus": "^0.0.12"
     },
     "extra": {
         "laminas": {

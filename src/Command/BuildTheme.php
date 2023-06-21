@@ -142,6 +142,7 @@ final class BuildTheme extends AbstractParamAwareCommand
 
     public static function copyConfig(?OutputInterface $output = null): int
     {
+        $returnCode = null;
         if (
             is_dir(self::DATA_PATH . self::DATA_TARGET)
             || mkdir(self::DATA_PATH . self::DATA_TARGET, 0750, true)
@@ -152,20 +153,21 @@ final class BuildTheme extends AbstractParamAwareCommand
                 $source = new SplFileInfo(self::BACKUP_CONFIG);
                 if ($source->isFile() && $source->isReadable()) {
                     if (! copy($source->getRealPath(), $targetInfo->getRealPath(). '/' . self::CONFIG_FILENAME)) {
-                        return self::FAILURE;
+                        $returnCode = self::FAILURE;
                     }
                     $output->writeln('<info>Config written to: ' . $targetInfo->getRealPath() . '</info>');
-                    return self::SUCCESS;
+                    $returnCode = self::SUCCESS;
                 } else {
                     $output->writeln('<error>Directory permission error: ' . $targetInfo->getRealPath() . '</error>');
                 }
 
             } else {
                 $output->writeln('<error>Config could not be written to: ' . $targetInfo->getRealPath() . '</error>');
-                return self::FAILURE;
+                $returnCode = self::FAILURE;
             }
         } else {
             $output->writeln('<error>Applications /data/thememanager could not be found or created.</error>');
         }
+        return $returnCode;
     }
 }
