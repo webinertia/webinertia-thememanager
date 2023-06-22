@@ -50,9 +50,9 @@ final class AdminLayoutListener extends AbstractListenerAggregate
          // Get and check the parameter for current controller
         $this->controller = $routeMatch->getParam('controller');
         $this->controller = $this->controllerManager->get($this->controller);
-        $name             = $this->config['admin_template'];
+       // $name             = ;
         // if this is not an admin controller or if we have already got the layout return
-        if (! $this->controller instanceof AdminControllerInterface || $this->templateMapResolver->has($name)) {
+        if (! ($this->controller instanceof AdminControllerInterface || $this->templateMapResolver->has($this->config['admin_template']))) {
              return;
         }
         // Get root view model
@@ -62,6 +62,6 @@ final class AdminLayoutListener extends AbstractListenerAggregate
             return;
         }
         // Change template
-        $layoutViewModel->setTemplate($name);
+        $layoutViewModel->setTemplate($this->config['admin_template'] ?? $layoutViewModel->getTemplate());
     }
 }

@@ -8,5 +8,5 @@ use Laminas\Session;
 
 final class Container extends Session\Container
 {
-
+    protected $name = 'ThemeData';
 }

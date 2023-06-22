@@ -19,7 +19,7 @@ class ContainerFactory implements FactoryInterface
         if (isset($config['theme_manager']['theme_changer_session_length'])) {
             $expiry = $config['theme_manager']['theme_changer_session_length'];
         }
-        $sessionContainer = new $requestedName('ThemeChanger', $container->get(SessionManager::class));
+        $sessionContainer = new $requestedName('ThemeData', $container->get(SessionManager::class));
         $sessionContainer->setExpirationSeconds($expiry);
         return $sessionContainer;
     }

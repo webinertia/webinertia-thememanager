@@ -5,6 +5,14 @@ return [
         'active' => true,
         'name' => 'default',
         'fallback' => 'default',
+        'resource_map' => [
+            'css/style.css'     => 'theme/default/css/style.css',
+            'css/bootstrap.css' => 'theme/default/css/bootstrap.css',
+            'css/bootstrap.min.css' => 'theme/default/css/bootstrap.min.css',
+            'js/bootstrap.js'   => 'theme/default/js/bootstrap.js',
+            'js/bootstrap.min.js'   => 'theme/default/js/bootstrap.min.js',
+            'img/favicon.ico'   => 'theme/default/img/favicon.ico',
+        ],
     ],
     'dark' => [
         'id' => 2,
@@ -13,3 +21,4 @@ return [
         'fallback' => 'default',
     ],
 ];
+

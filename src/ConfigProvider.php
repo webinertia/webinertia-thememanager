@@ -7,7 +7,7 @@ namespace Webinertia\ThemeManager;
 use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\Session;
-use Laminas\View\Helper\BasePath;
+use Laminas\View\Helper\Asset;
 use Webinertia\ThemeManager\Session\Container;
 use Webinertia\ThemeManager\Session\ContainerFactory;
 
@@ -33,7 +33,7 @@ class ConfigProvider
                 Container::class                       => ContainerFactory::class,
                 Listener\AdminLayoutListener::class    => Listener\AdminLayoutListenerFactory::class,
                 Listener\ThemeChanger::class           => Listener\ThemeChangerFactory::class,
-                Model\Theme::class                     => InvokableFactory::class,
+                Model\Theme::class                     => Model\ThemeFactory::class,
                 View\Resolver\TemplatePathStack::class => ViewTemplatePathStackFactory::class,
             ],
             'delegators' => [
@@ -58,7 +58,8 @@ class ConfigProvider
     public function getViewManagerConfig(): array
     {
         return [
-            'admin_template' => 'layout/admin',
+            //'admin_template' => 'layout/admin',
+            'admin_template' => null,
             'template_path_stack' => [
                 __DIR__ . '/../view',
             ],
@@ -77,7 +78,7 @@ class ConfigProvider
 
     public function getSessionContainerConfig(): array
     {
-        return [Session\Container::class];
+        return [Container::class, 'ThemeData'];
     }
 
     public function getSessionStorageConfig(): array
@@ -152,8 +153,8 @@ class ConfigProvider
     {
         return [
             'delegators' => [
-                BasePath::class => [
-                    View\Helper\Service\BasePathDelegatorFactory::class,
+                Asset::class => [
+                    View\Helper\Service\AssetDelegatorFactory::class,
                 ],
             ],
         ];

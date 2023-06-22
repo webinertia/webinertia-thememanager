@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Webinertia\ThemeManager\Model;
 
 use Laminas\Config\Factory;
+use Webinertia\ThemeManager\Session\Container;
 
 use function dirname;
 
@@ -17,6 +18,8 @@ class Theme
     public const DEFAULT_THEME = 'default';
     /** @var string $activeTheme */
     protected $activeTheme;
+    /** @var array<non-empty-string, non-empty-string> $resourceMap */
+    protected $resourceMap;
     /** @var string $fallBack */
     protected $fallBack;
     /** @var string $configFilename */
@@ -34,12 +37,22 @@ class Theme
             'default' => [
                 'id' => 1,
                 'active' => true,
-                'name' => 'default'
+                'name' => 'default',
+                'resource_map' => [
+                    'css/style.css'     => 'theme/default/css/style.css',
+                    'css/bootstrap.css' => 'theme/default/css/bootstrap.css',
+                    'css/bootstrap.min.css' => 'theme/default/css/bootstrap.min.css',
+                    'js/bootstrap.js'   => 'theme/default/js/bootstrap.js',
+                    'img/favicon.ico'   => 'theme/default/img/favicon.ico',
+                ],
             ]
     ];
+    /** @var Container $sessionContainer */
+    private $sessionContainer;
 
-    public function __construct()
+    public function __construct(Container $container)
     {
+        $this->sessionContainer = $container;
         $this->directory  = dirname(__DIR__, 4) . '/theme/';
         if (PHP_SAPI !== 'cli') {
             $this->config     = Factory::fromFile(self::CONFIG_PATH . $this->configFilename);
@@ -55,6 +68,7 @@ class Theme
         foreach ($config as $theme) {
             if ($theme['active']) {
                 $this->setActiveTheme($theme['name']);
+                $this->setResourceMap($theme['resource_map']);
             }
             if (! empty($theme['fallback'])) {
                 $this->setFallBack($theme['fallback']);
@@ -88,6 +102,9 @@ class Theme
 
     public function getActiveTheme(): string
     {
+        if (isset($this->sessionContainer->theme)) {
+            return $this->sessionContainer->theme;
+        }
         return $this->activeTheme;
     }
 
@@ -105,6 +122,16 @@ class Theme
     public function getConfig(): array
     {
         return $this->config;
+    }
+
+    public function getResourceMap(): array
+    {
+        return $this->resourceMap;
+    }
+
+    public function setResourceMap(array $resouceMap): void
+    {
+        $this->resourceMap = $resouceMap;
     }
 
     public function getOwnerId(): mixed
