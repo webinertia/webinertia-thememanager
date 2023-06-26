@@ -6,9 +6,9 @@ namespace Webinertia\ThemeManager\View\Helper\Service;
 
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
-use Laminas\View\Helper\Asset;
 use Psr\Container\ContainerInterface;
 use Webinertia\ThemeManager\Model\Theme;
+use Webinertia\ThemeManager\View\Helper\Asset;
 
 final class AssetDelegatorFactory implements DelegatorFactoryInterface
 {
@@ -21,6 +21,8 @@ final class AssetDelegatorFactory implements DelegatorFactoryInterface
             );
         }
         $theme = $container->get(Theme::class);
-        return new $name($theme->getResourceMap());
+        $assetHelper = new Asset($theme->getResourceMap());
+        //$assetHelper->setView($container->get('ViewRenderer'));
+        return $assetHelper;
     }
 }

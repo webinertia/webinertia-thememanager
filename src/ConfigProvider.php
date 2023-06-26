@@ -58,7 +58,8 @@ class ConfigProvider
     public function getViewManagerConfig(): array
     {
         return [
-            //'admin_template' => 'layout/admin',
+            //'admin_template' => 'layout/admin', // uncomment this option to use an admin template see docs
+            //'base_path' => '/', // used to set the value used by $helper->basePath()
             'admin_template' => null,
             'template_path_stack' => [
                 __DIR__ . '/../view',
@@ -99,7 +100,7 @@ class ConfigProvider
     public function getThemeManagerConfig(): array
     {
         return [
-            'theme_changer_session_length' => 3600 * 24 * 365 * 5,
+            'theme_changer_session_length' => 3600 * 24 * 365 * 5, // this is set a LONG way out so the theme doesnt reset ;)
         ];
     }
 

@@ -52,7 +52,7 @@ final class AdminLayoutListener extends AbstractListenerAggregate
         $this->controller = $this->controllerManager->get($this->controller);
        // $name             = ;
         // if this is not an admin controller or if we have already got the layout return
-        if (! ($this->controller instanceof AdminControllerInterface || $this->templateMapResolver->has($this->config['admin_template']))) {
+        if (! ($this->templateMapResolver->has($this->config['admin_template']) || $this->controller instanceof AdminControllerInterface)) {
              return;
         }
         // Get root view model

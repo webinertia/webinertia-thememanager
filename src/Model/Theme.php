@@ -68,7 +68,9 @@ class Theme
         foreach ($config as $theme) {
             if ($theme['active']) {
                 $this->setActiveTheme($theme['name']);
-                $this->setResourceMap($theme['resource_map']);
+                if (isset($theme['resource_map'])) {
+                    $this->setResourceMap($theme['resource_map']);
+                }
             }
             if (! empty($theme['fallback'])) {
                 $this->setFallBack($theme['fallback']);
