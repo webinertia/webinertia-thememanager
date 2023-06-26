@@ -13,7 +13,6 @@ use function sprintf;
 /**
  * View helper plugin to fetch asset from resource map.
  *
- * @final
  */
 class Asset extends LaminasAsset
 {
