@@ -67,8 +67,7 @@
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "phpstan": "php vendor/bin/phpstan analyse --xdebug",
         "post-install-cmd": [
-            "@clear-config-cache",
-            "@build-theme"
+            "@clear-config-cache"
         ],
         "post-update-cmd": "@clear-config-cache"
     },
