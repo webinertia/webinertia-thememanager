@@ -53,17 +53,30 @@
         }
     },
     "scripts": {
+        "build-theme": "php vendor/bin/laminas thememanager:build-theme",
         "check": [
             "@cs-check",
             "@static-analysis",
             "@test"
         ],
+        "clear-config-cache": "php bin/clear-config-cache.php",
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "static-analysis": "psalm --shepherd --stats",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
-        "phpstan": "php vendor/bin/phpstan analyse --xdebug"
+        "phpstan": "php vendor/bin/phpstan analyse --xdebug",
+        "post-install-cmd": [
+            "@clear-config-cache",
+            "@build-theme"
+        ],
+        "post-update-cmd": "@clear-config-cache"
+    },
+    "scripts-descriptions": {
+        "build-theme": "Builds the proper directory structure for Webinertia ThemeManager",
+        "cs-check": "Run coding standards checks.",
+        "cs-fix": "Automatically fix coding standard issues.",
+        "test": "Run unit tests."
     },
     "config": {
         "sort-packages": true,
