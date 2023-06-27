@@ -2,7 +2,7 @@
 
 ## Installation
 
-```
+```text
 composer require webinertia/webinertia-thememanager
 ```
 
