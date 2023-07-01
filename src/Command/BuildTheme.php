@@ -7,6 +7,8 @@ namespace Webinertia\ThemeManager\Command;
 use DirectoryIterator;
 use Laminas\Cli\Command\AbstractParamAwareCommand;
 use Laminas\Cli\Input\ParamAwareInputInterface;
+use Laminas\Config\Factory;
+use Laminas\Config\Writer\PhpArray as ConfigWriter;
 use Laminas\Filter\Exception;
 use Laminas\Filter\File\Rename;
 use SplFileInfo;
@@ -14,6 +16,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use function copy;
+use function count;
 use function in_array;
 use function is_dir;
 use function mkdir;
@@ -21,6 +24,7 @@ use function mkdir;
 final class BuildTheme extends AbstractParamAwareCommand
 {
     private const APP_DIR           = 'Application';
+    private const APP_CONFIG        = __DIR__ . '/../../../../../config/application.config.php';
     private const LAYOUT_PATH       = __DIR__ . '/../../../../../module/Application/view/layout';
     private const THEME_NAME        = 'default';
     private const ERROR_PATH        = __DIR__ . '/../../../../../module/Application/view/error';
@@ -30,10 +34,11 @@ final class BuildTheme extends AbstractParamAwareCommand
     private const PUBLIC_PATH         = __DIR__ . '/../../../../../public';
     private const PUBLIC_PATH_SEGMENT = '/theme';
     private const DATA_PATH         = __DIR__ . '/../../../../../data';
-    private const DATA_TARGET       = '/thememanager';
-    private const BACKUP_CONFIG     = __DIR__ . '/../../config/theme.config.php';
-    private const CONFIG_FILENAME   = 'theme.config.php';
+    private const DATA_TARGET       = '/app/settings';
+    private const BACKUP_CONFIG     = __DIR__ . '/../../config/theme.settings.php';
+    private const CONFIG_FILENAME   = 'theme.settings.php';
     private static $supportedAssets = ['css', 'img', 'js'];
+    private static $globPattern     = '/{,*.}settings.php';
 
     public function __construct(
         /** @var array<string, mixed> $config */
@@ -53,7 +58,9 @@ final class BuildTheme extends AbstractParamAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->migrateTheme($input, $output) === self::SUCCESS && self::copyConfig($output) === self::SUCCESS) {
-            return $this->migrateAssets($input, $output);
+            if ($this->migrateAssets($input, $output) === self::SUCCESS) {
+                return $this->updateGlobPath($output);
+            }
         } else {
             return self::FAILURE;
         }
@@ -166,8 +173,39 @@ final class BuildTheme extends AbstractParamAwareCommand
                 $returnCode = self::FAILURE;
             }
         } else {
-            $output->writeln('<error>Applications /data/thememanager could not be found or created.</error>');
+            $output->writeln('<error>Applications /data/app/settings could not be found or created.</error>');
         }
         return $returnCode;
+    }
+
+    private function updateGlobPath(?OutputInterface $output = null): int
+    {
+        $configFile = new SplFileInfo(self::APP_CONFIG);
+        $globPath = new SplFileInfo(self::DATA_PATH . self::DATA_TARGET);
+        $appConfig = Factory::fromFile($configFile->getRealPath(), true)->toArray();
+        $writeData = $globPath->getRealPath() . self::$globPattern;
+        if (isset($appConfig['module_listener_options']['config_glob_paths'])) {
+            if (
+                count($appConfig['module_listener_options']['config_glob_paths']) > 1
+                && in_array($writeData, $appConfig['module_listener_options']['config_glob_paths'])
+            ) {
+                $output->writeln('<info>glob path has already been updated in: ' . $configFile->getRealPath() . '</info>');
+                return self::SUCCESS;
+            }
+            $appConfig['module_listener_options']['config_glob_paths'][] = $writeData;
+            $writer = new ConfigWriter();
+            $writer->setUseBracketArraySyntax(true);
+            try {
+                $writer->toFile(self::APP_CONFIG, $appConfig);
+                $output->writeln('<info>glob path updated in: ' . $configFile->getRealPath() . '</info>');
+                return self::SUCCESS;
+            } catch (\Throwable $th) {
+                $output->writeln('<error>Glob path could not be updated in '. $configFile->getRealPath() .'</error>');
+                return self::FAILURE;
+            }
+        } else {
+            $output->writeln('<error>Could not parse config file: '. $configFile->getRealPath() .'</error>');
+            return self::FAILURE;
+        }
     }
 }

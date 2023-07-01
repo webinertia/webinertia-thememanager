@@ -12,6 +12,6 @@ class ThemeFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null): Theme
     {
-        return new $requestedName($container->get(Container::class));
+        return new $requestedName($container->get(Container::class), $container->get('config')['theme_manager']);
     }
 }

@@ -8,13 +8,14 @@ use Laminas\Config\Factory;
 use Webinertia\ThemeManager\Session\Container;
 
 use function dirname;
+use function realpath;
 
 use const PHP_SAPI;
 
 class Theme
 {
     public const BASE_PATH_SEGMENT = 'theme/';
-    public const CONFIG_PATH   = __DIR__ . '/../../../../../data/thememanager/';
+    public const CONFIG_PATH   = __DIR__ . '/../../../../../data/app/settings/';
     public const DEFAULT_THEME = 'default';
     /** @var string $activeTheme */
     protected $activeTheme;
@@ -23,15 +24,13 @@ class Theme
     /** @var string $fallBack */
     protected $fallBack;
     /** @var string $configFilename */
-    protected $configFilename = 'theme.config.php';
+    protected $configFilename = '/theme.settings.php';
     /** @var string $directory */
     protected $directory;
     /** @var array<int, string> $paths */
     protected $paths = [];
     /** @var string $resourceId */
     protected $resourceId = 'themes';
-    /** @var array<string, array> $config */
-    protected $config = [];
     /** @var array<string, array> $defaultConfig */
     private static $defaultConfig = [
             'default' => [
@@ -50,13 +49,12 @@ class Theme
     /** @var Container $sessionContainer */
     private $sessionContainer;
 
-    public function __construct(Container $container)
+    public function __construct(Container $container, protected array $config)
     {
         $this->sessionContainer = $container;
         $this->directory  = dirname(__DIR__, 4) . '/theme/';
         if (PHP_SAPI !== 'cli') {
-            $this->config     = Factory::fromFile(self::CONFIG_PATH . $this->configFilename);
-            $this->processConfig($this->config);
+            $this->processConfig($this->config['themes']);
         } else {
             $this->processConfig(self::$defaultConfig);
         }
