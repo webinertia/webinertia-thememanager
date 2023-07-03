@@ -65,11 +65,7 @@
         "static-analysis": "psalm --shepherd --stats",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
-        "phpstan": "php vendor/bin/phpstan analyse --xdebug",
-        "post-install-cmd": [
-            "@clear-config-cache"
-        ],
-        "post-update-cmd": "@clear-config-cache"
+        "phpstan": "php vendor/bin/phpstan analyse"
     },
     "scripts-descriptions": {
         "build-theme": "Builds the proper directory structure for Webinertia ThemeManager",
