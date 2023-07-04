@@ -3,6 +3,7 @@
     "description": "Provides multiple theme support to laminas mvc",
     "license": "BSD-3-Clause",
     "keywords": [
+        "webinertia",
         "laminas",
         "laminas-mvc",
         "laminas view"
