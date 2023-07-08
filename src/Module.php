@@ -14,15 +14,8 @@ final class Module
             'service_manager'    => $configProvider->getDependencyConfig(),
             'listeners'          => $configProvider->getListenerConfig(),
             'view_manager'       => $configProvider->getViewManagerConfig(),
-            'session_config'     => $configProvider->getSessionConfig(),
-            'session_containers' => $configProvider->getSessionContainerConfig(),
-            'session_storage'    => $configProvider->getSessionStorageConfig(),
-            'session_validators' => $configProvider->getSessionValidatorConfig(),
             'theme_manager'      => $configProvider->getThemeManagerConfig(),
-            'controllers'        => $configProvider->getControllerConfig(),
-            'router'             => $configProvider->getRouteConfig(),
             'form_elements'      => $configProvider->getFormElementConfig(),
-            'validators'         => $configProvider->getValidatorConfig(),
             'view_helpers'       => $configProvider->getViewHelperConfig(),
         ];
     }

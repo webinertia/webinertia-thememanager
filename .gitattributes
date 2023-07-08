@@ -11,6 +11,5 @@
 /.laminas-ci.json export-ignore
 /test/ export-ignore
 /vagrantfile export-ignore
-/Dockerfile export-ignore
 # Force our line endings to be LF, even for Windows
 * text eol=lf

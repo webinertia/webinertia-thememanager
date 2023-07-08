@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Webinertia\ThemeManager\View\Helper\Service;
 
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
-use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
 use Webinertia\ThemeManager\Model\Theme;
 use Webinertia\ThemeManager\View\Helper\Asset;
 
-final class AssetDelegatorFactory implements DelegatorFactoryInterface
+final class AssetFactory implements FactoryInterface
 {
     /** @inheritDoc */
-    public function __invoke(ContainerInterface $container, $name, callable $callback, ?array $options = null): Asset
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null): Asset
     {
         if (! $container->has(Theme::class)) {
             throw new ServiceNotFoundException(

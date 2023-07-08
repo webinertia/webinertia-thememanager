@@ -34,12 +34,11 @@ class Theme
     /** @var string $resourceId */
     protected $resourceId = 'themes';
 
-    /** @var Container $sessionContainer */
-    private $sessionContainer;
 
-    public function __construct(Container $container, protected array $config)
-    {
-        $this->sessionContainer = $container;
+    public function __construct(
+        protected array $config,
+        protected ?Container $sessionContainer = null,
+    ) {
         $this->directory  = dirname(__DIR__, 4) . '/theme/';
         if (PHP_SAPI !== 'cli') {
             $this->processConfig($this->config['themes']);

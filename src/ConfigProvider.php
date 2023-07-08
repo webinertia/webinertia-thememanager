@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace Webinertia\ThemeManager;
 
-use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
-use Laminas\Session;
 use Laminas\View\Helper\Asset;
-use Webinertia\ThemeManager\Session\Container;
-use Webinertia\ThemeManager\Session\ContainerFactory;
 
 class ConfigProvider
 {
@@ -30,9 +26,7 @@ class ConfigProvider
             ],
             'factories' => [
                 Command\BuildTheme::class              => Command\BuildThemeFactory::class,
-                Container::class                       => ContainerFactory::class,
                 Listener\AdminLayoutListener::class    => Listener\AdminLayoutListenerFactory::class,
-                Listener\ThemeChanger::class           => Listener\ThemeChangerFactory::class,
                 Model\Theme::class                     => Model\ThemeFactory::class,
                 View\Resolver\TemplatePathStack::class => ViewTemplatePathStackFactory::class,
             ],
@@ -51,15 +45,12 @@ class ConfigProvider
     {
         return [
             Listener\AdminLayoutListener::class,
-            Listener\ThemeChanger::class,
         ];
     }
 
     public function getViewManagerConfig(): array
     {
         return [
-            //'admin_template' => 'layout/admin', // uncomment this option to use an admin template see docs
-            //'base_path' => '/', // used to set the value used by $helper->basePath()
             'admin_template' => null,
             'template_path_stack' => [
                 __DIR__ . '/../view',
@@ -70,33 +61,6 @@ class ConfigProvider
         ];
     }
 
-    public function getSessionConfig(): array
-    {
-        return [
-            'use_cookies' => true,
-        ];
-    }
-
-    public function getSessionContainerConfig(): array
-    {
-        return [Container::class, 'ThemeData'];
-    }
-
-    public function getSessionStorageConfig(): array
-    {
-        return [
-            'type' => Session\Storage\SessionArrayStorage::class,
-        ];
-    }
-
-    public function getSessionValidatorConfig(): array
-    {
-        return [
-            Session\Validator\RemoteAddr::class,
-            Session\Validator\HttpUserAgent::class,
-        ];
-    }
-
     public function getThemeManagerConfig(): array
     {
         return [
@@ -104,48 +68,11 @@ class ConfigProvider
         ];
     }
 
-    public function getControllerConfig(): array
-    {
-        return [
-            'factories' => [
-                Controller\IndexController::class => Controller\IndexControllerFactory::class,
-            ],
-        ];
-    }
-
-    public function getRouteConfig(): array
-    {
-        return [
-            'routes' => [
-                'tm.login' => [
-                    'type' => Segment::class,
-                    'options' => [
-                        'route'    => '/admin/thememanager[/:action]',
-                        'defaults' => [
-                            'controller' => Controller\IndexController::class,
-                            'action'     => 'login',
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
     public function getFormElementConfig(): array
     {
         return [
             'factories' => [
-                Form\ThemeChanger::class => Form\ThemeChangerFactory::class,
-                Form\Login::class        => InvokableFactory::class,
-            ],
-        ];
-    }
-
-    public function getValidatorConfig(): array
-    {
-        return [
-            'factories' => [
-                Validator\Password::class => InvokableFactory::class,
+                Form\Login::class => InvokableFactory::class,
             ],
         ];
     }
@@ -153,10 +80,8 @@ class ConfigProvider
     public function getViewHelperConfig(): array
     {
         return [
-            'delegators' => [
-                Asset::class => [
-                    View\Helper\Service\AssetDelegatorFactory::class,
-                ],
+            'factories' => [
+                Asset::class => View\Helper\Service\AssetFactory::class,
             ],
         ];
     }
