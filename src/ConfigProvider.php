@@ -21,21 +21,16 @@ class ConfigProvider
     public function getDependencyConfig(): array
     {
         return [
-            'aliases'   => [
-                'ViewTemplatePathStack' => View\Resolver\TemplatePathStack::class,
-            ],
             'factories' => [
                 Command\BuildTheme::class              => Command\BuildThemeFactory::class,
                 Listener\AdminLayoutListener::class    => Listener\AdminLayoutListenerFactory::class,
                 Model\Theme::class                     => Model\ThemeFactory::class,
                 View\Resolver\TemplatePathStack::class => ViewTemplatePathStackFactory::class,
+                'ViewTemplatePathStack'                => View\Resolver\TemplatePathStackFactory::class,
             ],
             'delegators' => [
                 'ViewTemplateMapResolver' => [
                     View\Resolver\TemplateMapFactory::class,
-                ],
-                View\Resolver\TemplatePathStack::class => [
-                    View\Resolver\TemplatePathStackFactory::class
                 ],
             ],
         ];

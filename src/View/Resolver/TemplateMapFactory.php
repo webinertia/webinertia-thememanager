@@ -12,6 +12,8 @@ class TemplateMapFactory implements DelegatorFactoryInterface
 {
     public function __invoke(ContainerInterface $container, $name, callable $callback, ?array $options = null): TemplateMapResolver
     {
-        return new TemplateMapResolver([]);
+        $stack = \call_user_func($callback, []);
+        $stack->setMap([]);
+        return $stack;
     }
 }

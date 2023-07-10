@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Webinertia\ThemeManager\View\Resolver;
 
-use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
 use Webinertia\ThemeManager\Model\Theme;
 
-class TemplatePathStackFactory implements DelegatorFactoryInterface
+class TemplatePathStackFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $name, callable $callback, ?array $options = null): TemplatePathStack
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null): TemplatePathStack
     {
         $config = $container->get('config');
 
