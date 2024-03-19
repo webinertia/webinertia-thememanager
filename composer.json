@@ -26,8 +26,8 @@
         "laminas/laminas-cli": "^1.8",
         "laminas/laminas-session": "^2.16",
         "laminas/laminas-authentication": "^2.13.0",
-        "webinertia/limatus": "^0.0.12",
-        "webinertia/webinertia-mvc": "^0.0.3 || ^0.0.4"
+        "webinertia/limatus": "^0.0.12 || ^0.0.15",
+        "webinertia/webinertia-mvc": "^0.0.3 || ^0.0.4 || ^0.0.5"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "^2.5.0",
